@@ -1,0 +1,20 @@
+project:
+  type: website
+
+website:
+  title: "Workflow"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: report.qmd
+        text: Report
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+
+
+

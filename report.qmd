@@ -1,0 +1,149 @@
+---
+title: "Example Report"
+execute:
+    echo: false
+    warning: false
+    error: false
+params:
+    state: "Ohio"
+---
+
+In VS code press `cntrl + shift + F4` to enter visual mode.
+
+In RStudio enable visual mode in the top left corner of the source editor window.
+
+
+```{r}
+#| label: load-libraries
+
+library(lme4)
+library(data.table)
+library(DBI)
+library(dplyr)
+library(dbplyr)
+library(ggplot2)
+library(gt)
+```
+
+```{r}
+if(!file.exists("data/Provisional_COVID-19_Deaths_by_Sex_and_Age_20240322.csv")) download.file("https://data.cdc.gov/api/views/9bhg-hcku/rows.csv?fourfour=9bhg-hcku&cacheBust=1695825811&date=20240322&accessType=DOWNLOAD", destfile= "data/Provisional_COVID-19_Deaths_by_Sex_and_Age_20240322.csv")
+```
+
+```{r}
+con <- DBI::dbConnect(duckdb::duckdb())
+```
+
+Get some public data from the CDC on [COVID-19 deaths](https://data.cdc.gov/NCHS/Provisional-COVID-19-Deaths-by-Sex-and-Age/9bhg-hcku/about_data) and load this into an in-memory DuckDB database.
+
+```{r}
+#| output: false
+DBI::dbExecute(con, "CREATE TABLE covid AS SELECT * FROM read_csv_auto('data/Provisional_COVID-19_Deaths_by_Sex_and_Age_20240322.csv')")
+tbl_covid <- tbl(con, "covid")
+```
+
+## Method
+
+```{r}
+#| output: asis
+cat(stringi::stri_rand_lipsum(1, start_lipsum = TRUE))
+```
+
+## Descriptive statistics
+
+@tbl-total-deaths-by-state has information concerning the total deaths by State in the USA.
+
+```{r}
+#| label: tbl-total-deaths-by-state
+#| tbl-cap: "The top 10 of total deaths by State in the USA"
+tbl_covid |>
+    filter(`Age Group` == 'All Ages' & `Sex` == 'All Sexes' & State != "United States" & Group == "By Total") |>
+    group_by(State) |>
+    summarise(n=sum(`COVID-19 Deaths`, na.rm=T), .groups="drop") |>
+    arrange(desc(n)) |>
+    filter(row_number() <= 10) |>
+    gt() |>
+    fmt_number(
+    decimals = 2,
+    drop_trailing_zeros = TRUE
+  )
+```
+
+```{r}
+tbl_covid |>
+    filter(`Age Group` != 'All Ages' & `Sex` != 'All Sexes' & State == "United States" & Group == "By Total") ->
+    tbl_covid_usa
+
+tbl_covid_usa |>
+summarise(min(`Start Date`)) |>
+pull() ->
+start_date
+
+tbl_covid_usa |>
+summarise(min(`End Date`)) |>
+pull() ->
+end_date
+```
+
+@fig-covid-death-per-sex-and-age shows a figure with the number of Covid deaths in the USA.
+
+```{r}
+#| label: fig-covid-death-per-sex-and-age
+#| fig-cap: "Total deaths per age group and sex"
+tbl_covid_usa |>
+    group_by(`Age Group`, Sex) |>
+    summarise(`Total Deaths` = sum(`Total Deaths`)) |>
+    ggplot(aes(x=`Age Group`, y=`Total Deaths`, fill=Sex)) +
+    geom_bar(stat="identity", position="dodge") +
+    theme_bw() + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+```
+
+
+Some other information in @fig-covid-death-per-sex-and-age-by-state for two states.
+
+```{r}
+#| label: fig-covid-death-per-sex-and-age-by-state
+#| fig-cap: "Total deaths per age group and sex for 2 states"
+tbl_covid |>
+    filter(`Age Group` != 'All Ages' & `Sex` != 'All Sexes' & Group == "By Total") |>
+    filter(State %in% c("California", "Texas")) |>
+    group_by(`Age Group`, Sex, State) |>
+    summarise(`Total Deaths` = sum(`Total Deaths`)) |>
+    ggplot(aes(x=`Age Group`, y=`Total Deaths`, fill=Sex)) +
+    geom_bar(stat="identity", position="dodge") +
+    facet_wrap(~State) + 
+    theme_bw() + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+```
+
+## Individual result for the state of `r params$state`
+
+We use parameters to individualise reports, in this case for the State: `r params$state`.
+
+@fig-covid-death-for-selected-state shows the result for this state.
+
+```{r}
+#| label: fig-covid-death-for-selected-state
+#| fig-cap: !expr paste("Total deaths per age group and sex for the state of", params$state)
+tbl_covid |>
+    filter(`Age Group` != 'All Ages' & `Sex` != 'All Sexes' & Group == "By Total") |>
+    filter(State == !!params$state) |>
+    group_by(`Age Group`, Sex) |>
+    summarise(`Total Deaths` = sum(`Total Deaths`)) |>
+    ggplot(aes(x=`Age Group`, y=`Total Deaths`, fill=Sex)) +
+    geom_bar(stat="identity", position="dodge") +
+    theme_bw() + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+```
+
+## Conclusion
+
+```{r}
+#| output: asis
+cat(stringi::stri_rand_lipsum(1, start_lipsum = TRUE))
+```
+
+```{r}
+#| output: asis
+cat(stringi::stri_rand_lipsum(1, start_lipsum = TRUE))
+```
