@@ -1,5 +1,6 @@
 _site/
-.quarto/
 *_files/
 data/
 .Rproj.user
+
+/.quarto/
