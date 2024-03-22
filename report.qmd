@@ -26,7 +26,10 @@ library(gt)
 ```
 
 ```{r}
-if(!file.exists("data/Provisional_COVID-19_Deaths_by_Sex_and_Age_20240322.csv")) download.file("https://data.cdc.gov/api/views/9bhg-hcku/rows.csv?fourfour=9bhg-hcku&cacheBust=1695825811&date=20240322&accessType=DOWNLOAD", destfile= "data/Provisional_COVID-19_Deaths_by_Sex_and_Age_20240322.csv")
+if(!file.exists("data/Provisional_COVID-19_Deaths_by_Sex_and_Age_20240322.csv")) {
+    dir.create("data")
+    download.file("https://data.cdc.gov/api/views/9bhg-hcku/rows.csv?fourfour=9bhg-hcku&cacheBust=1695825811&date=20240322&accessType=DOWNLOAD", destfile= "data/Provisional_COVID-19_Deaths_by_Sex_and_Age_20240322.csv")
+}
 ```
 
 ```{r}
