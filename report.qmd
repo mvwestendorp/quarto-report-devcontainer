@@ -6,12 +6,12 @@ execute:
     error: false
 params:
     state: "Ohio"
+bibliography: references.bib
 ---
 
 In VS code press `cntrl + shift + F4` to enter visual mode.
 
 In RStudio enable visual mode in the top left corner of the source editor window.
-
 
 ```{r}
 #| label: load-libraries
@@ -86,7 +86,7 @@ tbl_covid_usa |>
     end_date
 ```
 
-@fig-covid-death-per-sex-and-age shows a figure with the number of Covid deaths in the USA.
+@fig-covid-death-per-sex-and-age shows a figure with the number of Covid deaths in the USA. We could refer to some risk factors in literature too.[@dessie2021]
 
 ```{r}
 #| label: fig-covid-death-per-sex-and-age
@@ -99,7 +99,6 @@ tbl_covid_usa |>
     theme_bw() + 
     theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 ```
-
 
 Some other information in @fig-covid-death-per-sex-and-age-by-state for two states.
 
