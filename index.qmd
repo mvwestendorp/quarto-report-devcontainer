@@ -53,16 +53,13 @@ Integratie van code in Quarto waardoor tabellen/figuren/modellen met de tekst in
 Creatie van jobs voor individuele rapporten (100 ziekenhuizen evt. in 2 talen)
 
 Heden: een R script die sequentieel rapporten genereert op lokale laptop (vooral in eindfase gezien lange tijdsduur van iteraties)
+
 Doel: offloading via batch job naar cluster
 
 ## Intern rapport met dashboarding
 
-Vooral een data science/statistiek werkzaamheid
+Een analoge workflow bestaat vooral voor data science/statistiek werkzaamheden rond exploratory data analysis (EDA) en het ontwikkelen statistische modellen (voornamelijk clusteirng, regressie en mixed models).
 
-- Exploratory data analysis
-- Statistische modellering
-	- Regressie
-	- Mixed models
-	- Clustering
-	
+Hiervoor is het nuttig om dashboards te kunnen gebruiken met een back-end (bijv. Shiny, Dash, ...)
 
+Zie aparte zip/repository voor een Shiny voorbeeld.

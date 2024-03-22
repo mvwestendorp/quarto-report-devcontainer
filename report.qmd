@@ -16,7 +16,6 @@ In RStudio enable visual mode in the top left corner of the source editor window
 ```{r}
 #| label: load-libraries
 
-library(lme4)
 library(data.table)
 library(DBI)
 library(dplyr)
@@ -77,14 +76,14 @@ tbl_covid |>
     tbl_covid_usa
 
 tbl_covid_usa |>
-summarise(min(`Start Date`)) |>
-pull() ->
-start_date
+    summarise(min(`Start Date`)) |>
+    pull() ->
+    start_date
 
 tbl_covid_usa |>
-summarise(min(`End Date`)) |>
-pull() ->
-end_date
+    summarise(min(`End Date`)) |>
+    pull() ->
+    end_date
 ```
 
 @fig-covid-death-per-sex-and-age shows a figure with the number of Covid deaths in the USA.

@@ -6,7 +6,7 @@ website:
   navbar:
     left:
       - href: index.qmd
-        text: Home
+        text: Workflow
       - href: report.qmd
         text: Report
 
