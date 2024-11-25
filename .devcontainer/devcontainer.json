@@ -2,7 +2,7 @@
 	"name": "R Data Science Environment",
 	"image": 
 		// More info: https://github.com/rocker-org/devcontainer-images/pkgs/container/devcontainer%2Ftidyverse
-		"ghcr.io/rocker-org/devcontainer/tidyverse:4.3",
+		"ghcr.io/rocker-org/devcontainer/tidyverse:4.4",
 
 	// Install Dev Container Features. More info: https://containers.dev/features
 	"features": {
