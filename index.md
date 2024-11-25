@@ -12,13 +12,13 @@ title: "Workflow"
 	- Visuele editor voor tekst aanpassingen (voor het betrekken domein experts) -> Rstudio / VS code
 	- Code geintegreerd met tekst
 - Veiligheid en performantie
-	- Beperken verwerking op laptops
+	- Beperken verwerking van gevoelige gegevens op laptops
 
 ## Requirements
 
 1. Versie controle: git repo
 2. Data toegang: database connectie via bijv. ODBC (duckdb in voorbeeld)
-3. R environment: R omgeving met (selectie van) packages
+3. R / Python environment: Python / R omgeving met (selectie van) packages
 
 # Workflow
 
@@ -29,7 +29,7 @@ Twee voorname workflows:
 
 ## Geparametriseerde rapporten
 
-In samenwerking met domein experts die instaan voor tekst.
+In samenwerking met domein experts die instaan voor de tekst.
 
 Integratie van code in Quarto waardoor tabellen/figuren/modellen met de tekst integreren.
 
@@ -50,15 +50,15 @@ Integratie van code in Quarto waardoor tabellen/figuren/modellen met de tekst in
 
 ### Genereren finale geparametriseerde rapporten
 
-Creatie van jobs voor individuele rapporten (100 ziekenhuizen evt. in 2 talen)
+Creatie van jobs voor individuele rapporten (100 verschillende entiteiten evt. in 2 talen)
 
-Heden: een R script die sequentieel rapporten genereert op lokale laptop (vooral in eindfase gezien lange tijdsduur van iteraties)
+Heden: een R script die sequentieel rapporten genereert op lokale laptop
 
-Doel: offloading via batch job naar cluster
+Doel: offloading via batch jobs naar cluster
 
 ## Intern rapport met dashboarding
 
-Een analoge workflow bestaat vooral voor data science/statistiek werkzaamheden rond exploratory data analysis (EDA) en het ontwikkelen statistische modellen (voornamelijk clusteirng, regressie en mixed models).
+Een analoge workflow bestaat vooral voor data science/statistiek werkzaamheden rond exploratory data analysis (EDA) en het ontwikkelen statistische modellen (voornamelijk clustering, regressie, mixed models en machine learning).
 
 Hiervoor is het nuttig om dashboards te kunnen gebruiken met een back-end (bijv. Shiny, Dash, ...).
 Voordeel vs. Power-BI is hergebruik van bestaande code, versie controle voor dashboard en cost-benefit van aanvullend leren van Power-BI.
